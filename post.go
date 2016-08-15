@@ -17,10 +17,10 @@ func New() *poster {
 
 func (p *poster) Add(key, val string) {
 	w := p.buf
-	if used {
+	if p.used {
 		w.WriteByte('&')
 	} else {
-		used = true
+		p.used = true
 	}
 	w.WriteString(key)
 	w.WriteByte('=')
@@ -29,14 +29,14 @@ func (p *poster) Add(key, val string) {
 
 func (p *poster) AddEscaped(key, val string) {
 	w := p.buf
-	if used {
+	if p.used {
 		w.WriteByte('&')
 	} else {
-		used = true
+		p.used = true
 	}
 	w.WriteString(key)
 	w.WriteByte('=')
-	w.WriteString(url.EncodeQuery(val))
+	w.WriteString(url.QueryEscape(val))
 }
 
 func (p *poster) Close() {
